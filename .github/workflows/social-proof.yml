@@ -1,0 +1,34 @@
+name: Social Proof Generator
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'  # Her 3 saatte bir
+  workflow_dispatch:
+
+jobs:
+  generate-proof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Generate testimonials
+        run: |
+          NAMES=("John" "Alice" "Bob" "Emma" "David")
+          AMOUNTS=(150 200 300 450 500)
+          
+          INDEX=$((RANDOM % 5))
+          NAME=${NAMES[$INDEX]}
+          AMOUNT=${AMOUNTS[$INDEX]}
+          
+          TODAY=$(date '+%Y-%m-%d')
+          
+          echo "🎉 $NAME just earned \$$AMOUNT from farming! Join now: https://t.me/MonoFarmBot/Farm" >> docs/testimonials.md
+          sed -i "1i## Latest Success Stories - $TODAY\n" docs/testimonials.md
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/testimonials.md
+          git commit -m "💫 Add new testimonials" || exit 0
+          git push
