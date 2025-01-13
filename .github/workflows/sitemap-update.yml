@@ -1,0 +1,25 @@
+name: Update Sitemap
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Her gün gece yarısı
+  workflow_dispatch:
+
+jobs:
+  update-sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Update sitemap timestamp
+        run: |
+          TODAY=$(date '+%Y-%m-%d')
+          sed -i "s/<lastmod>.*<\/lastmod>/<lastmod>$TODAY<\/lastmod>/g" docs/sitemap.xml
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/sitemap.xml
+          git commit -m "🤖 Daily sitemap update" || exit 0
+          git push
