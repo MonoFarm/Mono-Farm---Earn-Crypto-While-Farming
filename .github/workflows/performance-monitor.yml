@@ -1,0 +1,34 @@
+name: Performance Monitoring
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Her 30 dakikada bir
+  workflow_dispatch:
+
+jobs:
+  monitor-performance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check website performance
+        run: |
+          # Lighthouse CLI kullanarak performans raporu oluştur
+          npm install -g lighthouse
+          lighthouse https://monofarm.lol --output json --output-path ./docs/performance.json --chrome-flags="--headless --no-sandbox"
+          
+          # Performans metriklerini çıkar
+          PERFORMANCE=$(jq '.categories.performance.score' ./docs/performance.json)
+          SEO_SCORE=$(jq '.categories.seo.score' ./docs/performance.json)
+          
+          echo "Performance: $PERFORMANCE" >> ./docs/metrics.md
+          echo "SEO Score: $SEO_SCORE" >> ./docs/metrics.md
+          echo "Date: $(date '+%Y-%m-%d %H:%M')" >> ./docs/metrics.md
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/performance.json docs/metrics.md
+          git commit -m "📊 Update performance metrics" || exit 0
+          git push
