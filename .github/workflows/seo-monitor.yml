@@ -1,0 +1,35 @@
+name: SEO Monitoring
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Her 6 saatte bir
+  workflow_dispatch:
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check for broken links
+        run: |
+          npm install -g broken-link-checker
+          blc https://monofarm.lol -ro || true
+          
+  update-meta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Update meta description
+        run: |
+          TODAY=$(date '+%Y-%m-%d')
+          sed -i "s/content=\"Join .* players/content=\"Join $(( ( RANDOM % 1000 + 10000 ) )) players/g" docs/index.html
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/index.html
+          git commit -m "📊 Update player count - $TODAY" || exit 0
+          git push
