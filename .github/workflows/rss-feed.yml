@@ -1,0 +1,40 @@
+name: RSS Feed Generator
+
+on:
+  schedule:
+    - cron: '0 */8 * * *'  # Her 8 saatte bir
+  workflow_dispatch:
+
+jobs:
+  generate-rss:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Generate RSS feed
+        run: |
+          cat > docs/feed.xml << EOF
+          <?xml version="1.0" encoding="UTF-8" ?>
+          <rss version="2.0">
+          <channel>
+            <title>Mono Farm Updates</title>
+            <link>https://monofarm.lol</link>
+            <description>Latest updates from Mono Farm - The #1 Crypto Farming Game</description>
+            <lastBuildDate>$(date -R)</lastBuildDate>
+            <item>
+              <title>Daily Farming Update</title>
+              <link>https://monofarm.lol/updates</link>
+              <description>New farming opportunities and increased rewards!</description>
+              <pubDate>$(date -R)</pubDate>
+            </item>
+          </channel>
+          </rss>
+          EOF
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/feed.xml
+          git commit -m "📰 Update RSS feed" || exit 0
+          git push
