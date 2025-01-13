@@ -1,0 +1,39 @@
+name: SEO Keyword Optimizer
+
+on:
+  schedule:
+    - cron: '0 1 * * *'  # Her gün saat 01:00'de
+  workflow_dispatch:
+
+jobs:
+  optimize-keywords:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Rotate keywords
+        run: |
+          KEYWORDS=(
+            "best crypto farming game"
+            "earn crypto daily"
+            "free crypto farming"
+            "telegram crypto bot"
+            "play to earn crypto"
+          )
+          
+          INDEX=$((RANDOM % 5))
+          PRIMARY_KEYWORD=${KEYWORDS[$INDEX]}
+          
+          # Update meta keywords
+          sed -i "s/primary_keyword=\".*\"/primary_keyword=\"$PRIMARY_KEYWORD\"/" docs/index.html
+          
+          # Update page title
+          sed -i "s/<title>.*<\/title>/<title>Mono Farm - $PRIMARY_KEYWORD | Earn USDT Daily<\/title>/" docs/index.html
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/index.html
+          git commit -m "🎯 Optimize SEO keywords" || exit 0
+          git push
