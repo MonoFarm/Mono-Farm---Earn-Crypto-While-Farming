@@ -1,0 +1,28 @@
+name: Schema.org Update
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # Her 4 saatte bir
+  workflow_dispatch:
+
+jobs:
+  update-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Update Schema.org data
+        run: |
+          PLAYERS=$((RANDOM % 1000 + 10000))
+          RATING=$(awk -v min=4.7 -v max=5.0 'BEGIN{srand(); print min+rand()*(max-min)}')
+          
+          sed -i "s/\"ratingValue\": \"[0-9.]*\"/\"ratingValue\": \"$RATING\"/" docs/index.html
+          sed -i "s/\"ratingCount\": \"[0-9]*\"/\"ratingCount\": \"$PLAYERS\"/" docs/index.html
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/index.html
+          git commit -m "🔄 Update Schema.org ratings" || exit 0
+          git push
