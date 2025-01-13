@@ -12,6 +12,11 @@
 
 ![Mono Farm Banner](https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200&h=400&fit=crop)
 
+![GitHub stars](https://img.shields.io/github/stars/KULLANICI_ADINIZ/mono-farm?style=social)
+![GitHub forks](https://img.shields.io/github/forks/KULLANICI_ADINIZ/mono-farm?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/KULLANICI_ADINIZ/mono-farm?style=social)
+
+
 </div>
 
 ## 🌟 Earn Real Crypto While Farming | Free-to-Play on Telegram
