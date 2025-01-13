@@ -1,0 +1,25 @@
+name: Keep Repository Active
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Update timestamp
+        run: |
+          DATE=$(date '+%Y-%m-%d')
+          echo "🔄 Last updated: $DATE" >> README.md
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "📅 Daily update: $(date '+%Y-%m-%d')" || exit 0
+          git push
