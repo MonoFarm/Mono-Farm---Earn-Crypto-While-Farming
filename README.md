@@ -171,7 +171,7 @@ Need help? We're here 24/7:
 - ❓ [FAQ Page](https://monofarm.lol/faq)
 
 ## 🔍 SEO Keywords
-crypto farming, play to earn, telegram bot, blockchain game, earn crypto, free crypto, TON blockchain, farming game, USDT earnings, cryptocurrency farming, P2E game, free USDT, crypto airdrop, telegram game, farming simulator, crypto rewards, passive income crypto, TON games, blockchain farming, earn money online, free to play crypto game, best crypto farming game 2024, telegram crypto bot, daily crypto earnings, crypto gaming platform
+crypto farming, play to earn, telegram bot, blockchain game, earn crypto, free crypto, TON blockchain, farming game, USDT earnings, cryptocurrency farming, P2E game, free USDT, crypto airdrop, telegram game, farming simulator, crypto rewards, passive income crypto, TON games, blockchain farming, earn money online, free to play crypto game, best crypto farming game 2025, telegram crypto bot, daily crypto earnings, crypto gaming platform
 
 ---
 
