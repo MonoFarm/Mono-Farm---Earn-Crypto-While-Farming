@@ -64,8 +64,8 @@
 
 | Metric | Value |
 |--------|--------|
-| 👥 Active Players | 11000+ |
-| 💰 Total Rewards Paid | $102000+ |
+| 👥 Active Players | 12000+ |
+| 💰 Total Rewards Paid | $103000+ |
 | 🌾 Daily Active Farms | 5,000+ |
 | 🌍 Countries Reached | 50+ |
 
